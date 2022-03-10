@@ -36,7 +36,7 @@ jobs:
           echo "write into the text file"
           terraform fmt -check > ./unformatted.txt
           echo "printing out the unformated text file"
-          sudo cat ~/unformatted.txt
+          sudo cat ./unformatted.txt
           echo "count nos of unformatted files"
           count=`sudo cat ./unformatted.txt | wc -l`
           echo "no of files: $count"
