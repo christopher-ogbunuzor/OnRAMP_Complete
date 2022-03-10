@@ -2,7 +2,7 @@
 data "aws_ami" "my_aws_ami" {
 
   filter {
-    name                                = "name"
+    name   = "name"
     values = ["amzn2-ami*"]
   }
   owners      = ["137112412989"]
