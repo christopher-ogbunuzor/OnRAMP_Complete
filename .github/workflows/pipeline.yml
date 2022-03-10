@@ -26,7 +26,6 @@ jobs:
         id: fmt
         run: |
           echo "checking which files not formatted properly"
-          terraform fmt -check ./terraformfiles
           echo "write into a file"
           terraform fmt -check ./terraformfiles > ~/unformatted.txt
           echo "count nos of unformatted files"
