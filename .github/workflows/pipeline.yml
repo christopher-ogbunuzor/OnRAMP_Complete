@@ -31,6 +31,11 @@ jobs:
         run: terraform plan 
         continue-on-error: true
 
+      - name: fail and exit pipeline
+        id: Fail_Exit
+        run: exit 1 
+        continue-on-error: true
+
       - name: Apply
         id: apply
         run: terraform apply -auto-approve 
