@@ -23,13 +23,13 @@ jobs:
       - name: Init
         id: init
         run: terraform init
-        continue-on-error: true
+        
         
 
       - name: Plan
         id: plan
         run: terraform plan 
-        continue-on-error: true
+        
 
       - name: fail and exit pipeline
         id: Fail_Exit
