@@ -28,6 +28,7 @@ jobs:
           echo "checking which files not formatted properly"
           echo "write into a file"
           terraform fmt -check ./terraformfiles > ~/unformatted.txt
+          cat ~/unformatted.txt
           echo "count nos of unformatted files"
           count=`cat ~/unformatted.txt | wc -l`
           echo "no of files: $count"
