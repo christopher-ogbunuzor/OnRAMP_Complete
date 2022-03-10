@@ -1,5 +1,5 @@
 vpc_cidr      = "192.168.0.0/16"
-vpc_name      = "OnRAMPvpc"
+vpc_name      = "OnRAMPvpc_without_using_modules"
 IG_name       = "OnRAMPgateway"
 public_a_cidr = "192.168.11.0/24"
 key_name= "ta-lab-key"
