@@ -27,6 +27,8 @@ jobs:
         run: |
           echo "create empty unformated text file"
           sudo touch ./unformatted.txt
+          echo "check file permissions"
+          ls -al ./unformatted.txt
           echo "write into the text file"
           sudo terraform fmt -check ./terraformfiles > ./unformatted.txt
           echo "printing out the unformated text file"
