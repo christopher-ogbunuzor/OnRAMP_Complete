@@ -1,0 +1,49 @@
+name: Onramp upskilling
+on:
+  push:
+    branches:
+      - VPC_subnet_Terraform_fmtCheck
+jobs:
+  terraform_fmt_check:
+    runs-on: ubuntu-latest
+    outputs: 
+      checkcount: ${{ steps.fmt.outputs.build_id }}
+    steps: # The list of steps to take for executionnn
+      - name: Authenticate with AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-1
+
+      - name: Clone your code in the pipeline
+        uses: actions/checkout@v2
+
+      - name: Terraform setup
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Terraform fmt check
+        id: fmt
+        run: |
+          count=$(terraform fmt -check | wc -l)
+          if [ $count != 0 ]; then exit 1; fi
+
+      - name: Init
+        id: init
+        run: terraform init
+        continue-on-error: true
+        
+      - name: Plan
+        id: plan
+        run: terraform plan 
+        continue-on-error: true
+
+      - name: Apply
+        id: apply
+        run: terraform apply -auto-approve 
+        continue-on-error: true
+
+      - name: Destroy
+        id: destroy
+        run: terraform destroy -auto-approve 
+        continue-on-error: true
