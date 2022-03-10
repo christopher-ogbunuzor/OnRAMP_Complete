@@ -26,6 +26,7 @@ jobs:
         id: fmt
         run: |
           count=`terraform fmt -check | wc -l`
+          echo "no of files: $count"
           if [ $count != 0 ]; then exit 1; fi
 
       - name: Init
