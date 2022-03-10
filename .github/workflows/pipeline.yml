@@ -38,8 +38,8 @@ jobs:
           echo "printing out the unformated text file"
           cat ./unformatted.txt
           echo "count nos of unformatted files"
-          count=`cat ./unformatted.txt | wc -l`
-          echo "no of files: $count"
+          count=`grep -o 'tf' ./unformatted.txt | wc -l`
+          echo "no of occurrence: $count"
           if [ $count != 0 ]; then exit 1; fi
 
       - name: Init
