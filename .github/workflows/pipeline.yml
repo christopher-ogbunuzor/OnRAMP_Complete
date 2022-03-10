@@ -29,7 +29,7 @@ jobs:
           terraform fmt -check .
           count=`terraform fmt -check . | wc -l`
           echo "no of files: $count"
-          if [ $count != 0 ]; then exit 1; fi
+          if [ $count != 0 ]; then exit 0; fi
 
       - name: Init
         id: init
