@@ -25,12 +25,14 @@ jobs:
       - name: Terraform fmt check
         id: fmt
         run: |
-          echo "checking which files not formatted properly"
-          echo "write into a file"
-          terraform fmt -check ./terraformfiles > ~/unformatted.txt
+          echo "create empty unformated text file"
+          touch ./unformatted.txt
+          echo "write into the text file"
+          terraform fmt -check ./terraformfiles > ./unformatted.txt
+          echo "printing out the unformated text file"
           cat ~/unformatted.txt
           echo "count nos of unformatted files"
-          count=`cat ~/unformatted.txt | wc -l`
+          count=`cat ./unformatted.txt | wc -l`
           echo "no of files: $count"
           if [ $count != 0 ]; then exit 1; fi
 
