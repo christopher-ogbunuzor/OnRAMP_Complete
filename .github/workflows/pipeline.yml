@@ -29,6 +29,10 @@ jobs:
           sudo touch ./unformatted.txt
           echo "check file permissions"
           ls -al ./unformatted.txt
+          echo "change file permissions"
+          sudo chmod 777 ./unformatted.txt
+          echo "check file permissions again"
+          ls -al ./unformatted.txt
           echo "write into the text file"
           sudo terraform fmt -check ./terraformfiles > ./unformatted.txt
           echo "printing out the unformated text file"
