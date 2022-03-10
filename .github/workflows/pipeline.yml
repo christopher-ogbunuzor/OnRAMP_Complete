@@ -25,6 +25,8 @@ jobs:
       - name: Terraform fmt check
         id: fmt
         run: |
+          echo "checking which files not formatted properly"
+          terraform fmt -check
           count=`terraform fmt -check | wc -l`
           echo "no of files: $count"
           if [ $count != 0 ]; then exit 1; fi
