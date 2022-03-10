@@ -27,7 +27,10 @@ jobs:
         run: |
           echo "checking which files not formatted properly"
           terraform fmt -check ./terraformfiles
-          count=`terraform fmt -check ./terraformfiles | wc -l`
+          echo "write into a file"
+          terraform fmt -check ./terraformfiles > ~/unformatted.txt
+          echo "count nos of unformatted files"
+          count=`cat ~/unformatted.txt | wc -l`
           echo "no of files: $count"
           if [ $count != 0 ]; then exit 1; fi
 
