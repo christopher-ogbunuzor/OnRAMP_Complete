@@ -25,7 +25,7 @@ jobs:
       - name: Terraform fmt check
         id: fmt
         run: |
-          count=$(terraform fmt -check | wc -l)
+          count=`terraform fmt -check | wc -l`
           if [ $count != 0 ]; then exit 1; fi
 
       - name: Init
