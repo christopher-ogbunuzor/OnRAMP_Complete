@@ -8,7 +8,7 @@ def lambda_handler(event, context):
         RoleSessionName="copc547",
         ExternalId='chris'
     )
-    print("this it typ of acct b")
+    print("this outputs the type of the object -> acct b")
     print(type(acct_b))
     
     ACCESS_KEY = acct_b['Credentials']['AccessKeyId']
