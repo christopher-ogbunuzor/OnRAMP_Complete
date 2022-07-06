@@ -1,0 +1,4 @@
+bucketName = ""
+tableName = ""
+tfstateKey=""
+region=""
