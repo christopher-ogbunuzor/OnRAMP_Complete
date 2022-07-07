@@ -1,4 +1,0 @@
-bucketName = ""
-tableName = ""
-tfstateKey=""
-region=""

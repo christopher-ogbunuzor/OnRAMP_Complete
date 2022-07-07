@@ -1,86 +1,48 @@
 resource "aws_codepipeline" "tfer--Pipeline_TF_Plan_Apply" {
   artifact_store {
-    location = "codepipeline-us-east-1-187050563254"
+    location = "onrampterrafrom"
     type     = "S3"
   }
 
   name     = "Pipeline_TF_Plan_Apply"
-  role_arn = "arn:aws:iam::314045000409:role/service-role/AWSCodePipelineServiceRole-us-east-1-Pipeline_TF_Plan_Apply"
+  role_arn = aws_iam_role.tfer--AWSCodePipelineServiceRole-us-east-1-Pipeline_TF_Plan_Apply.arn
 
-  stage {
+stage {
+    name = "Source"
     action {
-      category = "Approval"
+      category = "Source"
 
       configuration = {
-        NotificationArn = "arn:aws:sns:us-east-1:314045000409:checkTF_Plan"
+        BranchName           = "master"
+        OutputArtifactFormat = "CODE_ZIP"
+        PollForSourceChanges = "false"
+        RepositoryName       = aws_codecommit_repository.tfer--onramp_pipeline_cc_repo.repository_name
       }
 
-      name      = "planApproval"
-      owner     = "AWS"
-      provider  = "Manual"
-      region    = "us-east-1"
-      run_order = "1"
-      version   = "1"
-    }
-
-    name = "approveTFPlan"
-  }
-
-  stage {
-    action {
-      category = "Approval"
-
-      configuration = {
-        NotificationArn = "arn:aws:sns:us-east-1:314045000409:checkTF_Plan"
-      }
-
-      name      = "review_TFSEC_results"
-      owner     = "AWS"
-      provider  = "Manual"
-      region    = "us-east-1"
-      run_order = "1"
-      version   = "1"
-    }
-
-    name = "TFSEC_MANUAL_APPROVAL"
-  }
-
-  stage {
-    action {
-      category = "Build"
-
-      configuration = {
-        BatchEnabled = "false"
-        ProjectName  = "codebuildPlan"
-      }
-
-      input_artifacts  = ["SourceArtifact"]
-      name             = "BuildPlan_Infracost"
-      namespace        = "BuildVariables"
-      output_artifacts = ["BuildArtifact"]
+      name             = "Source"
+      namespace        = "SourceVariables"
+      output_artifacts = ["SourceArtifact"]
       owner            = "AWS"
-      provider         = "CodeBuild"
-      region           = "us-east-1"
+      provider         = "CodeCommit"
+      region           = "eu-west-2"
       run_order        = "1"
       version          = "1"
     }
-
-    name = "Build"
   }
 
-  stage {
+stage {
     action {
       category = "Build"
 
       configuration = {
-        ProjectName = "Tfsec_Check"
+        ProjectName = aws_codebuild_project.tfer--Tfsec_Check.name
       }
 
       input_artifacts = ["SourceArtifact"]
       name            = "tfsec_check"
       owner           = "AWS"
       provider        = "CodeBuild"
-      region          = "us-east-1"
+      region          = "eu-west-2"
       run_order       = "1"
       version         = "1"
     }
@@ -90,17 +52,82 @@ resource "aws_codepipeline" "tfer--Pipeline_TF_Plan_Apply" {
 
   stage {
     action {
+      category = "Approval"
+
+      configuration = {
+        NotificationArn = aws_sns_topic.tfer--checkTF_Plan.arn
+      }
+
+      name      = "review_TFSEC_results"
+      owner     = "AWS"
+      provider  = "Manual"
+      region    = "eu-west-2"
+      run_order = "1"
+      version   = "1"
+    }
+
+    name = "TFSEC_MANUAL_APPROVAL"
+  }
+  
+
+  stage {
+    action {
       category = "Build"
 
       configuration = {
-        ProjectName = "codebuildApply"
+        BatchEnabled = "false"
+        ProjectName  = aws_codebuild_project.tfer--codebuildPlan.name
+      }
+
+      input_artifacts  = ["SourceArtifact"]
+      name             = "BuildPlan_Infracost"
+      namespace        = "BuildVariables"
+      output_artifacts = ["BuildArtifact"]
+      owner            = "AWS"
+      provider         = "CodeBuild"
+      region           = "eu-west-2"
+      run_order        = "1"
+      version          = "1"
+    }
+
+    name = "Build"
+  }
+
+
+    stage {
+    action {
+      category = "Approval"
+
+      configuration = {
+        NotificationArn = aws_sns_topic.tfer--checkTF_Plan.arn
+      }
+
+      name      = "planApproval"
+      owner     = "AWS"
+      provider  = "Manual"
+      region    = "eu-west-2"
+      run_order = "1"
+      version   = "1"
+    }
+
+    name = "approveTFPlan"
+  }
+
+  
+
+  stage {
+    action {
+      category = "Build"
+
+      configuration = {
+        ProjectName = aws_codebuild_project.tfer--codebuildApply.name
       }
 
       input_artifacts = ["SourceArtifact"]
       name            = "ApplyPlan"
       owner           = "AWS"
       provider        = "CodeBuild"
-      region          = "us-east-1"
+      region          = "eu-west-2"
       run_order       = "1"
       version         = "1"
     }
@@ -108,27 +135,5 @@ resource "aws_codepipeline" "tfer--Pipeline_TF_Plan_Apply" {
     name = "BuildApply"
   }
 
-  stage {
-    action {
-      category = "Source"
-
-      configuration = {
-        BranchName           = "master"
-        OutputArtifactFormat = "CODE_ZIP"
-        PollForSourceChanges = "false"
-        RepositoryName       = "onramp_pipeline_cc_repo"
-      }
-
-      name             = "Source"
-      namespace        = "SourceVariables"
-      output_artifacts = ["SourceArtifact"]
-      owner            = "AWS"
-      provider         = "CodeCommit"
-      region           = "us-east-1"
-      run_order        = "1"
-      version          = "1"
-    }
-
-    name = "Source"
-  }
+  
 }

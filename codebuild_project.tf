@@ -1,13 +1,13 @@
 resource "aws_codebuild_project" "tfer--Tfsec_Check" {
-  # artifacts {
-  #   encryption_disabled    = "true"
-  #   location               = "onramp-codebuild-artifacts"
-  #   name                   = "TFSEC_ATRF"
-  #   namespace_type         = "NONE"
-  #   override_artifact_name = "false"
-  #   packaging              = "NONE"
-  #   type                   = "S3"
-  # }
+  artifacts {
+    encryption_disabled    = "true"
+    location               = "onrampterrafrom"
+    name                   = "TFSEC_ATRF"
+    namespace_type         = "NONE"
+    override_artifact_name = "false"
+    packaging              = "NONE"
+    type                   = "S3"
+  }
 
   badge_enabled = "false"
   build_timeout = "60"
@@ -62,15 +62,15 @@ resource "aws_codebuild_project" "tfer--Tfsec_Check" {
 }
 
 resource "aws_codebuild_project" "tfer--codebuildApply" {
-  # artifacts {
-  #   encryption_disabled    = "true"
-  #   location               = "onramp-codebuild-artifacts"
-  #   name                   = "codebuildApply"
-  #   namespace_type         = "BUILD_ID"
-  #   override_artifact_name = "false"
-  #   packaging              = "NONE"
-  #   type                   = "S3"
-  # }
+  artifacts {
+    encryption_disabled    = "true"
+    location               = "onrampterrafrom"
+    name                   = "codebuildApply"
+    namespace_type         = "BUILD_ID"
+    override_artifact_name = "false"
+    packaging              = "NONE"
+    type                   = "S3"
+  }
 
   badge_enabled = "false"
   build_timeout = "60"
@@ -132,15 +132,15 @@ resource "aws_codebuild_project" "tfer--codebuildApply" {
 }
 
 resource "aws_codebuild_project" "tfer--codebuildPlan" {
-  # artifacts {
-  #   encryption_disabled    = "true"
-  #   location               = "onramp-codebuild-artifacts"
-  #   name                   = "codebuildPlan"
-  #   namespace_type         = "BUILD_ID"
-  #   override_artifact_name = "false"
-  #   packaging              = "NONE"
-  #   type                   = "S3"
-  # }
+  artifacts {
+    encryption_disabled    = "true"
+    location               = "onrampterrafrom"
+    name                   = "codebuildPlan"
+    namespace_type         = "BUILD_ID"
+    override_artifact_name = "false"
+    packaging              = "NONE"
+    type                   = "S3"
+  }
 
   badge_enabled = "false"
   build_timeout = "60"
