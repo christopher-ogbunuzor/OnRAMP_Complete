@@ -1,7 +1,7 @@
 resource "aws_codebuild_project" "tfer--Tfsec_Check" {
   artifacts {
     encryption_disabled    = "true"
-    location               = "onrampterrafrom"
+    location               = "" #"bucket name"
     name                   = "TFSEC_ATRF"
     namespace_type         = "NONE"
     override_artifact_name = "false"
@@ -18,7 +18,6 @@ resource "aws_codebuild_project" "tfer--Tfsec_Check" {
 
   concurrent_build_limit = "1"
   description            = "Check tf files using TFSEC"
-  # encryption_key         = "arn:aws:kms:us-east-1:314045000409:alias/aws/s3"
 
   environment {
     compute_type                = "BUILD_GENERAL1_SMALL"
@@ -64,7 +63,7 @@ resource "aws_codebuild_project" "tfer--Tfsec_Check" {
 resource "aws_codebuild_project" "tfer--codebuildApply" {
   artifacts {
     encryption_disabled    = "true"
-    location               = "onrampterrafrom"
+    location               = ""  #"bucket name"
     name                   = "codebuildApply"
     namespace_type         = "BUILD_ID"
     override_artifact_name = "false"
@@ -81,7 +80,6 @@ resource "aws_codebuild_project" "tfer--codebuildApply" {
 
   concurrent_build_limit = "1"
   description            = "This is code build project for terraform apply"
-  # encryption_key         = "arn:aws:kms:us-east-1:314045000409:alias/aws/s3"
 
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
@@ -151,7 +149,6 @@ resource "aws_codebuild_project" "tfer--codebuildPlan" {
 
   concurrent_build_limit = "1"
   description            = "code build project for terraform inti and plan"
-  # encryption_key         = "arn:aws:kms:us-east-1:314045000409:alias/aws/s3"
 
   environment {
     compute_type = "BUILD_GENERAL1_SMALL"
