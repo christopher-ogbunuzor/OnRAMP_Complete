@@ -41,3 +41,9 @@ POLICY
 
   sqs_success_feedback_sample_rate = "0"
 }
+
+resource "aws_sns_topic_subscription" "approvalAction" {
+  topic_arn = aws_sns_topic.tfer--checkTF_Plan.arn
+  protocol  = "email"
+  endpoint  = "" #put email here
+}

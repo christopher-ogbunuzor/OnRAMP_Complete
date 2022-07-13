@@ -43,7 +43,7 @@ resource "aws_codepipeline" "tfer--Pipeline_TF_Plan_Apply" {
       output_artifacts = ["SourceArtifact"]
 
       configuration = {
-        ConnectionArn        = "arn:aws:codestar-connections:" #put codestar_connection_arn
+        ConnectionArn        = "arn:aws:codestar-connections:us-east-1:314045000409:connection/ab539c75-9566-449d-abff-44c076cc9ab5" #put codestar_connection_arn
         FullRepositoryId     = "chris-cloudreach/onramp-Ogbunuzor_Co"
         BranchName           = "main"  #var.github_branch
         OutputArtifactFormat = "CODE_ZIP"
