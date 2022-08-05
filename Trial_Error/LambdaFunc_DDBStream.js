@@ -49,12 +49,14 @@ exports.handler = function (event, context, callback) {
     
     process.env.CUSTNAME = arr[1];
     
-    
+   
 
-  
+    
   execSync('rm -rf /tmp/*', { encoding: 'utf8', stdio: 'inherit' }); 
   execSync('cd /tmp && git clone https://github.com/chris-cloudreach/demoRepoWed && cd /tmp/demoRepoWed && git checkout -b $CUSTNAME', { encoding: 'utf8', stdio: 'inherit' });
-
+  // since cloudreach repo is private, clone it using pat below
+  // git clone https://your_username:your_github_token@github.com/username/private-repo.git
+  // https://github.com/cloudreach/onramp-customers.git
   
   fs.writeFileSync('/tmp/demoRepoWed/terraform/lz-deployment/terraform.tfvars', bigstring, { flag: 'a+' }, function (err) {
   if (err) {
