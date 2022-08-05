@@ -15,6 +15,8 @@
         margin-bottom: -30px;
         display: inline-block;
         vertical-align: middle;
+        /* height: 50%; */
+        width: 50%;
 }
       .App-header {
         position: relative;
@@ -47,7 +49,7 @@ input:valid {
 
   <body>
     <div class="App-header">
-     <img class="wordmark" src="https://onramp-static-website.s3.eu-west-1.amazonaws.com/Img/wordmark-black.56c35675.png" alt="cloudreach logo">
+     <img class="wordmark" src="https://onramp-poc.s3.eu-west-1.amazonaws.com/Cloudreach_Wordmark_RGB_Black-aac-1.png" alt="cloudreach logo">
       <h1>Provide Landing Zone Details</h1>
     </div>
     
@@ -65,7 +67,7 @@ input:valid {
 
       <div class="form-group">
         <label for="name">Company name</label>
-        <input type="name" class="form-control" id="customername"  placeholder="Enter company name" required>
+        <input type="name" class="form-control" id="customername"  placeholder="Only small letters, numbers and hyphen allowed (no spaces)" required pattern="^[a-z0-9-]*$">
       </div> 
 
       <div class="form-group">
@@ -84,19 +86,26 @@ input:valid {
       </div> 
 
       <div class="form-group">
-        <label for="name">Whitelist</label>
-        <input type="name" class="form-control" id="Whitelist"  placeholder="Enter whitelist CIDR. E.g. 10.0.0.0/8" required pattern="^(([0-9]){1,3}\.){3}[0-9]{1,3}\/([0-9]|[1-2][0-8])$">
+        <label for="name">Whitelist CIDR</label>
+        <input type="name" class="form-control" id="Whitelist"  placeholder="If multiple CIDRs, separate them by commas (no spaces allowed) E.g. 10.0.0.0/8,10.0.0.0/9,192.10.8.0/16" required pattern="^((([0-9]){1,3}\.){3}[0-9]{1,3}\/([0-9],|[1-2][0-8],)|(([0-9]){1,3}\.){3}[0-9]{1,3}\/([0-9]|[1-2][0-8])){1,}$">
       </div> 
       <!-- ^(([0-9]){1,3}\.){3}[0-9]{1,3}\/[1-2][0-8]$ -->
       <div class="form-group">
-        <label for="name">Region</label>
-        <input type="name" class="form-control" id="region" placeholder="Enter VPC Region. E.g. us-east-1 in small letters" required pattern="^(us|eu|ap|ca|me|sa)-[a-z]*-[1-3]{1}$">
+        <label for="name">VPC Region</label>
+        <input type="name" class="form-control" id="region" placeholder="Only small letters and hyphen allowed E.g. us-east-1" required pattern="^(us|eu|ap|ca|me|sa)-[a-z]*-[1-3]{1}$">
       </div> 
-
       <div class="form-group">
         <label for="name">VPC Name</label>
         <input type="name" class="form-control" id="vpcname"  placeholder="Enter VPC Name" required>
       </div> 
+      <div class="form-group">
+        <label for="name">Env</label>
+        <input type="name" class="form-control" id="env"  placeholder="Enter env value" required>
+      </div>
+      <div class="form-group">
+        <label for="name">Customer Gateway IP</label>
+        <input type="name" class="form-control" id="cgwIP"  placeholder="Enter customer gateway ip address" required>
+      </div>
 
       <h4 id="response"></h4>
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -108,7 +117,8 @@ input:valid {
     (() => {
       const form = document.querySelector('form');
       const submitResponse = document.querySelector('#response');
-      const formURL = 'https://s91kgxw4mj.execute-api.eu-west-1.amazonaws.com/Prod/submitForm';
+      const formURL = 'https://xj34eyfbi4.execute-api.us-east-1.amazonaws.com/Prod/submitForm';
+      
 
       form.onsubmit = e => {
         e.preventDefault();
