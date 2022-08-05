@@ -1,5 +1,5 @@
 const { Octokit } = require('@octokit/rest');
-const octokit = new Octokit({  auth: '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'});
+const octokit = new Octokit({  auth: 'ADD TOKEN HERE'});
 
 exports.handler = async (event) => {
     // TODO implement
